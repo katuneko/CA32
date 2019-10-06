@@ -35,13 +35,18 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -78,68 +83,150 @@
             // 
             this.button3.Location = new System.Drawing.Point(12, 577);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(118, 41);
+            this.button3.Size = new System.Drawing.Size(98, 41);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Init(1)";
+            this.button3.Text = "All 5";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(136, 577);
+            this.button4.Location = new System.Drawing.Point(116, 577);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(118, 41);
+            this.button4.Size = new System.Drawing.Size(98, 41);
             this.button4.TabIndex = 4;
-            this.button4.Text = "Init(50)";
+            this.button4.Text = "All 50";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(260, 577);
+            this.button5.Location = new System.Drawing.Point(220, 577);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(118, 41);
+            this.button5.Size = new System.Drawing.Size(98, 41);
             this.button5.TabIndex = 5;
-            this.button5.Text = "Init(99)";
+            this.button5.Text = "All 95";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
             // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 627);
-            this.trackBar1.Maximum = 65535;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(512, 90);
-            this.trackBar1.TabIndex = 6;
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(328, 535);
+            this.textBox1.Location = new System.Drawing.Point(391, 534);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(196, 31);
+            this.textBox1.Size = new System.Drawing.Size(124, 31);
             this.textBox1.TabIndex = 7;
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(12, 717);
-            this.trackBar2.Maximum = 65535;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(512, 90);
-            this.trackBar2.TabIndex = 8;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox1_KeyPress);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 50;
+            this.timer1.Interval = 25;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(328, 577);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(57, 41);
+            this.button6.TabIndex = 9;
+            this.button6.Text = "-";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.Button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(454, 577);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(57, 41);
+            this.button7.TabIndex = 10;
+            this.button7.Text = "+";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(328, 624);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(57, 41);
+            this.button8.TabIndex = 11;
+            this.button8.Text = "=";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.Button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(454, 624);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(57, 41);
+            this.button9.TabIndex = 12;
+            this.button9.Text = "#";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.Button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(12, 624);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(98, 41);
+            this.button10.TabIndex = 13;
+            this.button10.Text = "□5";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.Button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(116, 624);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(98, 41);
+            this.button11.TabIndex = 14;
+            this.button11.Text = "□50";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.Button11_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(220, 624);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(98, 41);
+            this.button12.TabIndex = 15;
+            this.button12.Text = "□95";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.Button12_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(391, 624);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(57, 41);
+            this.button13.TabIndex = 17;
+            this.button13.Text = "||";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.Button13_Click);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(391, 577);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(57, 41);
+            this.button14.TabIndex = 16;
+            this.button14.Text = "|";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.Button14_Click);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(541, 819);
-            this.Controls.Add(this.trackBar2);
+            this.ClientSize = new System.Drawing.Size(541, 684);
+            this.Controls.Add(this.button13);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -149,8 +236,6 @@
             this.Name = "Form1";
             this.Text = "CA32";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,10 +249,17 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button14;
     }
 }
 

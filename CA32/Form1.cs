@@ -22,7 +22,7 @@ namespace CA32
         public Form1()
         {
             InitializeComponent();
-            refleshCA(50);
+            refleshCA(50, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
             refleshTable();
         }
 
@@ -44,7 +44,7 @@ namespace CA32
         {
             _update = !_update;
         }
-        private void refleshCA(int prb)
+        private void refleshCA(int prb, int x0, int y0, int x1, int y1)
         {
             for (int i = 0; i < Param.CA_SIZE; i++)
             {
@@ -56,7 +56,14 @@ namespace CA32
                     }
                     else
                     {
-                        _caCur[i, j] = (byte)(((prb - 1) < _r.Next(100)) ? 0 : (Param.STATE_SIZE - 1));
+                        if((x0 <= i) && (i <= x1) && (y0 <= j) && (j <= y1))
+                        {
+                            _caCur[i, j] = (byte)(((prb - 1) < _r.Next(100)) ? 0 : (Param.STATE_SIZE - 1));
+                        }
+                        else
+                        {
+                            _caCur[i, j] = 0;
+                        }
                     }
                 }
             }
@@ -74,6 +81,49 @@ namespace CA32
                             for (int e = 0; e < Param.STATE_SIZE; e++)
                             {
                                 _table[a, b, c, d, e] = (byte)((_r.Next(2) == 0) ? 0 : Param.STATE_SIZE - 1);
+                            }
+                        }
+                    }
+                }
+            }
+            uint code = 0;
+            int i = 0;
+            for (int a = 0; a < Param.STATE_SIZE; a += (Param.STATE_SIZE - 1))
+            {
+                for (int b = 0; b < Param.STATE_SIZE; b += (Param.STATE_SIZE - 1))
+                {
+                    for (int c = 0; c < Param.STATE_SIZE; c += (Param.STATE_SIZE - 1))
+                    {
+                        for (int d = 0; d < Param.STATE_SIZE; d += (Param.STATE_SIZE - 1))
+                        {
+                            for (int e = 0; e < Param.STATE_SIZE; e += (Param.STATE_SIZE - 1))
+                            {
+                                if (_table[a, b, c, d, e] == Param.STATE_SIZE - 1) {
+                                    code += (uint)(1 << i);
+                                }
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+            textBox1.Text = code.ToString("X2");
+        }
+        private void changeTable(uint code)
+        {
+            int i = 0;
+            for (int a = 0; a < Param.STATE_SIZE; a += (Param.STATE_SIZE - 1))
+            {
+                for (int b = 0; b < Param.STATE_SIZE; b += (Param.STATE_SIZE - 1))
+                {
+                    for (int c = 0; c < Param.STATE_SIZE; c += (Param.STATE_SIZE - 1))
+                    {
+                        for (int d = 0; d < Param.STATE_SIZE; d += (Param.STATE_SIZE - 1))
+                        {
+                            for (int e = 0; e < Param.STATE_SIZE; e += (Param.STATE_SIZE - 1))
+                            {
+                                _table[a, b, c, d, e] = (byte)(((code & (uint)(1 << i)) == 0) ? 0 : Param.STATE_SIZE - 1);
+                                i++;
                             }
                         }
                     }
@@ -130,35 +180,155 @@ namespace CA32
             }
             Marshal.Copy(buf, 0, data.Scan0, buf.Length);
             bitmap.UnlockBits(data);
-
-
-/*
-            for (int i = 0; i < Param.CA_SIZE; i++)
-            {
-                for (int j = 0; j < Param.CA_SIZE; j++)
-                {
-                    int lv = _caCur[i, j] * 16;
-                    Color c = Color.FromArgb(lv, lv, lv);
-                    bitmap.SetPixel(i, j, c);
-                }
-            }
-*/
             pictureBox1.Image = bitmap;
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            refleshCA(5);
+            refleshCA(5, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            refleshCA(50);
+            refleshCA(50, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            refleshCA(95);
+            refleshCA(95, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
+        }
+
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if (i == Param.CA_SIZE / 2)
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+        private void Button14_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if (j == Param.CA_SIZE / 2)
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if ((j == Param.CA_SIZE / 2) || (i == Param.CA_SIZE / 2))
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        private void Button8_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if ((i == (Param.CA_SIZE / 2) - 1) || (i == (Param.CA_SIZE / 2) + 1))
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        private void Button9_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if ((j == (Param.CA_SIZE / 2) - 1) || (i == (Param.CA_SIZE / 2) - 1) ||
+                        (j == (Param.CA_SIZE / 2) + 1) || (i == (Param.CA_SIZE / 2) + 1))
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        private void Button13_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Param.CA_SIZE; i++)
+            {
+                for (int j = 0; j < Param.CA_SIZE; j++)
+                {
+                    if ((j == (Param.CA_SIZE / 2) - 1) || (j == (Param.CA_SIZE / 2) + 1))
+                    {
+                        _caCur[i, j] = (Param.STATE_SIZE - 1);
+                    }
+                    else
+                    {
+                        _caCur[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        private void Button10_Click(object sender, EventArgs e)
+        {
+            refleshCA(5, Param.CA_SIZE / 4, Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4);
+        }
+
+        private void Button11_Click(object sender, EventArgs e)
+        {
+            refleshCA(50, Param.CA_SIZE / 4, Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4);
+        }
+
+        private void Button12_Click(object sender, EventArgs e)
+        {
+            refleshCA(95, Param.CA_SIZE / 4, Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4, 3 * Param.CA_SIZE / 4);
+        }
+
+        private void TextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                string s = textBox1.Text;
+                uint code = Convert.ToUInt32(s, 16);
+                changeTable(code);
+            }
         }
     }
     static class Param
