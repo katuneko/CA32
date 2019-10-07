@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define TABLE8
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,15 +16,20 @@ namespace CA32
     public partial class Form1 : Form
     {
         Random _r = new Random();
-        byte[,,,,] _table = new byte[Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE];
+        byte[,,,,] _table4 = new byte[Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE];
+        byte[,,,,,,,,] _table8 = new byte[Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE, Param.STATE_SIZE];
         byte[,] _caCur = new byte[Param.CA_SIZE, Param.CA_SIZE];
-        byte[,] _caNext = new byte[512, 512];
+        byte[,] _caNext = new byte[Param.CA_SIZE, Param.CA_SIZE];
         bool _update = true;
         public Form1()
         {
             InitializeComponent();
             refleshCA(50, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
-            refleshTable();
+#if TABLE4
+            refleshTable4();
+#elif TABLE8
+            refleshTable8();
+#endif
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -37,7 +43,11 @@ namespace CA32
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            refleshTable();
+#if TABLE4
+            refleshTable4();
+#elif TABLE8
+            refleshTable8();
+#endif
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -68,7 +78,7 @@ namespace CA32
                 }
             }
         }
-        private void refleshTable()
+        private void refleshTable4()
         {
             for(int a = 0; a < Param.STATE_SIZE; a++)
             {
@@ -80,7 +90,7 @@ namespace CA32
                         {
                             for (int e = 0; e < Param.STATE_SIZE; e++)
                             {
-                                _table[a, b, c, d, e] = (byte)((_r.Next(2) == 0) ? 0 : Param.STATE_SIZE - 1);
+                                _table4[a, b, c, d, e] = (byte)((_r.Next(2) == 0) ? 0 : Param.STATE_SIZE - 1);
                             }
                         }
                     }
@@ -98,7 +108,7 @@ namespace CA32
                         {
                             for (int e = 0; e < Param.STATE_SIZE; e += (Param.STATE_SIZE - 1))
                             {
-                                if (_table[a, b, c, d, e] == Param.STATE_SIZE - 1) {
+                                if (_table4[a, b, c, d, e] == Param.STATE_SIZE - 1) {
                                     code += (uint)(1 << i);
                                 }
                                 i++;
@@ -109,8 +119,63 @@ namespace CA32
             }
             textBox1.Text = code.ToString("X2");
         }
-        private void changeTable(uint code)
+        private void refleshTable8()
         {
+            for (int a = 0; a < Param.STATE_SIZE; a++)
+            {
+                for (int b = 0; b < Param.STATE_SIZE; b++)
+                {
+                    for (int c = 0; c < Param.STATE_SIZE; c++)
+                    {
+                        for (int d = 0; d < Param.STATE_SIZE; d++)
+                        {
+                            for (int e = 0; e < Param.STATE_SIZE; e++)
+                            {
+                                byte by = (byte)_r.Next(100);
+                                for (int f = 0; f < Param.STATE_SIZE; f++)
+                                {
+                                    for (int g = 0; g < Param.STATE_SIZE; g++)
+                                    {
+                                        for (int h = 0; h < Param.STATE_SIZE; h++)
+                                        {
+                                            for (int i = 0; i < Param.STATE_SIZE; i++)
+                                            {
+                                                byte by2 = (byte)_r.Next(100);
+                                                if((a == 0) &&
+                                                   (b == 0) &&
+                                                   (c == 0) &&
+                                                   (d == 0) &&
+                                                   (e == 0))
+                                                {
+                                                    _table8[a, b, c, d, e, f, g, h, i] = 0;
+                                                }else if ((a == Param.STATE_SIZE - 1) &&
+                                                          (b == Param.STATE_SIZE - 1) &&
+                                                          (c == Param.STATE_SIZE - 1) &&
+                                                          (d == Param.STATE_SIZE - 1) &&
+                                                          (e == Param.STATE_SIZE - 1))
+                                                {
+                                                    _table8[a, b, c, d, e, f, g, h, i] = 0;
+                                                }
+                                                else if (by2 < 0)
+                                                {
+                                                    by = (byte)_r.Next(100);
+                                                    _table8[a, b, c, d, e, f, g, h, i] = (byte)((by < 50) ? 0 : Param.STATE_SIZE - 1);
+                                                }
+                                                else
+                                                {
+                                                    _table8[a, b, c, d, e, f, g, h, i] = (byte)((by < 50) ? 0 : Param.STATE_SIZE - 1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+#if FALSE
+            uint code = 0;
             int i = 0;
             for (int a = 0; a < Param.STATE_SIZE; a += (Param.STATE_SIZE - 1))
             {
@@ -122,13 +187,41 @@ namespace CA32
                         {
                             for (int e = 0; e < Param.STATE_SIZE; e += (Param.STATE_SIZE - 1))
                             {
-                                _table[a, b, c, d, e] = (byte)(((code & (uint)(1 << i)) == 0) ? 0 : Param.STATE_SIZE - 1);
+                                if (_table4[a, b, c, d, e] == Param.STATE_SIZE - 1)
+                                {
+                                    code += (uint)(1 << i);
+                                }
                                 i++;
                             }
                         }
                     }
                 }
             }
+            textBox1.Text = code.ToString("X2");
+#endif
+        }
+        private void changeTable(uint code)
+        {
+#if TABLE4
+            int i = 0;
+            for (int a = 0; a < Param.STATE_SIZE; a += (Param.STATE_SIZE - 1))
+            {
+                for (int b = 0; b < Param.STATE_SIZE; b += (Param.STATE_SIZE - 1))
+                {
+                    for (int c = 0; c < Param.STATE_SIZE; c += (Param.STATE_SIZE - 1))
+                    {
+                        for (int d = 0; d < Param.STATE_SIZE; d += (Param.STATE_SIZE - 1))
+                        {
+                            for (int e = 0; e < Param.STATE_SIZE; e += (Param.STATE_SIZE - 1))
+                            {
+                                _table4[a, b, c, d, e] = (byte)(((code & (uint)(1 << i)) == 0) ? 0 : Param.STATE_SIZE - 1);
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+#endif
         }
         private void progressCA()
         {
@@ -136,12 +229,39 @@ namespace CA32
             {
                 for (int j = 0; j < Param.CA_SIZE; j++)
                 {
+#if TABLE4
                     byte a = (i == 0) ? _caCur[(Param.CA_SIZE - 1), j] : _caCur[i - 1, j];
                     byte b = (j == 0) ? _caCur[i, (Param.CA_SIZE - 1)] : _caCur[i, j - 1];
                     byte c = _caCur[i, j];
                     byte d = (i == (Param.CA_SIZE - 1)) ? _caCur[0, j] : _caCur[i + 1, j];
                     byte e = (j == (Param.CA_SIZE - 1)) ? _caCur[i, 0] : _caCur[i, j + 1];
-                    _caNext[i,j] = getNext(a, b, c, d, e);
+                    _caNext[i,j] = getNext4(a, b, c, d, e);
+#elif TABLE8
+                    byte a = (i == 0) ? _caCur[(Param.CA_SIZE - 1), j] : _caCur[i - 1, j];
+                    byte b = (j == 0) ? _caCur[i, (Param.CA_SIZE - 1)] : _caCur[i, j - 1];
+                    byte c = _caCur[i, j];
+                    byte d = (i == (Param.CA_SIZE - 1)) ? _caCur[0, j] : _caCur[i + 1, j];
+                    byte e = (j == (Param.CA_SIZE - 1)) ? _caCur[i, 0] : _caCur[i, j + 1];
+                    /*
+                     * fag
+                     * bce
+                     * hdo
+                     */
+                    int x, y;
+                    x = (i == 0) ? (Param.CA_SIZE - 1) : i - 1;
+                    y = (j == 0) ? (Param.CA_SIZE - 1) : j - 1;
+                    byte f = _caCur[x, y];
+                    x = (i == (Param.CA_SIZE - 1)) ? 0 : i + 1;
+                    y = (j == 0) ? (Param.CA_SIZE - 1) : j - 1;
+                    byte g = _caCur[x, y];
+                    x = (i == 0) ? (Param.CA_SIZE - 1) : i - 1;
+                    y = (j == (Param.CA_SIZE - 1)) ? 0 : j + 1;
+                    byte h = _caCur[x, y];
+                    x = (i == (Param.CA_SIZE - 1)) ? 0 : i + 1;
+                    y = (j == (Param.CA_SIZE - 1)) ? 0 : j + 1;
+                    byte o = _caCur[x, y];
+                    _caNext[i, j] = getNext8(a, b, c, d, e, f, g, h, o);
+#endif
                 }
             }
             for (int i = 0; i < Param.CA_SIZE; i++)
@@ -152,9 +272,13 @@ namespace CA32
                 }
             }
         }
-        private byte getNext(int a, int b, int c, int d, int e)
+        private byte getNext4(int a, int b, int c, int d, int e)
         {
-            return _table[a, b, c, d, e];
+            return _table4[a, b, c, d, e];
+        }
+        private byte getNext8(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+        {
+            return _table8[a, b, c, d, e, f, g, h, i];
         }
         private void updateImage()
         {
@@ -171,7 +295,7 @@ namespace CA32
             {
                 for (int j = 0; j < Param.CA_SIZE; j++)
                 {
-                    int lv = _caCur[i, j] * 16;
+                    int lv = _caCur[i, j] * 200;
                     buf[4 * (i * Param.CA_SIZE + j) + 0] = 0;//a
 //                    buf[4 * (i * Param.CA_SIZE + j) + 1] = (byte)lv;//r
 //                    buf[4 * (i * Param.CA_SIZE + j) + 2] = (byte)lv;//g
@@ -333,7 +457,7 @@ namespace CA32
     }
     static class Param
     {
-        public const int STATE_SIZE = 16;
+        public const int STATE_SIZE = 2;
         public const int CA_SIZE = 512;
     }
 }
