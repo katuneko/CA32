@@ -14,7 +14,8 @@ namespace CA32
         public Form1()
         {
             InitializeComponent();
-            _ca = new CArgb(true, 50, 95);
+            _ca = new CAWave(true, 50, 95);
+            //            _ca = new CArgb(true, 50, 95);
             StayProb.Text = "50";
             DeathProb.Text = "95";
             //_ca = new CA32(false, 50, 0);
@@ -141,10 +142,74 @@ namespace CA32
         {
             _ca.refleshLine(16);
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Neighbor_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Neighbor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                try
+                {
+                    _ca._today = Convert.ToDouble(Today.Text);
+                    _ca._yesterday = Convert.ToDouble(Yesterday.Text);
+                    _ca._neighbor = Convert.ToDouble(Neighbor.Text);
+                    _ca.refleshCA(95, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void Yesterday_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                try
+                {
+                    _ca._today = Convert.ToDouble(Today.Text);
+                    _ca._yesterday = Convert.ToDouble(Yesterday.Text);
+                    _ca._neighbor = Convert.ToDouble(Neighbor.Text);
+                    _ca.refleshCA(95, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void Today_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                try
+                {
+                    _ca._today = Convert.ToDouble(Today.Text);
+                    _ca._yesterday = Convert.ToDouble(Yesterday.Text);
+                    _ca._neighbor = Convert.ToDouble(Neighbor.Text);
+                    _ca.refleshCA(95, 0, 0, Param.CA_SIZE, Param.CA_SIZE);
+                }
+                catch
+                {
+
+                }
+            }
+        }
     }
     static class Param
     {
-        public const int STATE_SIZE = 2;
+        public const int STATE_SIZE = 256;
         public const int CA_SIZE = 256;
     }
 }

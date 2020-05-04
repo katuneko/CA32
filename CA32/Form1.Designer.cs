@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Timer timer1;
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RefleshButton = new System.Windows.Forms.Button();
             this.RunStop = new System.Windows.Forms.Button();
             this.Fmin = new System.Windows.Forms.Button();
             this.Fmid = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -50,8 +50,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.Neighbor = new System.Windows.Forms.TextBox();
+            this.Yesterday = new System.Windows.Forms.TextBox();
+            this.Today = new System.Windows.Forms.TextBox();
+            timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 25;
+            timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // pictureBox1
             // 
@@ -112,12 +122,6 @@
             this.button5.Text = "All 95";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // button6
             // 
@@ -211,17 +215,17 @@
             // 
             // StayProb
             // 
-            this.StayProb.Location = new System.Drawing.Point(95, 517);
+            this.StayProb.Location = new System.Drawing.Point(46, 517);
             this.StayProb.Name = "StayProb";
-            this.StayProb.Size = new System.Drawing.Size(100, 31);
+            this.StayProb.Size = new System.Drawing.Size(100, 19);
             this.StayProb.TabIndex = 18;
             this.StayProb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StayProb_KeyDown);
             // 
             // DeathProb
             // 
-            this.DeathProb.Location = new System.Drawing.Point(95, 555);
+            this.DeathProb.Location = new System.Drawing.Point(46, 542);
             this.DeathProb.Name = "DeathProb";
-            this.DeathProb.Size = new System.Drawing.Size(100, 31);
+            this.DeathProb.Size = new System.Drawing.Size(100, 19);
             this.DeathProb.TabIndex = 19;
             this.DeathProb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeathProb_KeyDown);
             // 
@@ -230,16 +234,16 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 524);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 24);
+            this.label1.Size = new System.Drawing.Size(28, 12);
             this.label1.TabIndex = 20;
             this.label1.Text = "Stay";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 555);
+            this.label2.Location = new System.Drawing.Point(5, 542);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 24);
+            this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 21;
             this.label2.Text = "Death";
             // 
@@ -253,10 +257,39 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // Neighbor
+            // 
+            this.Neighbor.Location = new System.Drawing.Point(168, 517);
+            this.Neighbor.Name = "Neighbor";
+            this.Neighbor.Size = new System.Drawing.Size(100, 19);
+            this.Neighbor.TabIndex = 23;
+            this.Neighbor.TextChanged += new System.EventHandler(this.Neighbor_TextChanged);
+            this.Neighbor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Neighbor_KeyDown);
+            // 
+            // Yesterday
+            // 
+            this.Yesterday.Location = new System.Drawing.Point(168, 542);
+            this.Yesterday.Name = "Yesterday";
+            this.Yesterday.Size = new System.Drawing.Size(100, 19);
+            this.Yesterday.TabIndex = 24;
+            this.Yesterday.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.Yesterday.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Yesterday_KeyDown);
+            // 
+            // Today
+            // 
+            this.Today.Location = new System.Drawing.Point(168, 567);
+            this.Today.Name = "Today";
+            this.Today.Size = new System.Drawing.Size(100, 19);
+            this.Today.TabIndex = 25;
+            this.Today.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Today_KeyDown);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(279, 590);
+            this.Controls.Add(this.Today);
+            this.Controls.Add(this.Yesterday);
+            this.Controls.Add(this.Neighbor);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -293,7 +326,6 @@
         private System.Windows.Forms.Button Fmin;
         private System.Windows.Forms.Button Fmid;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
@@ -308,6 +340,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox Neighbor;
+        private System.Windows.Forms.TextBox Yesterday;
+        private System.Windows.Forms.TextBox Today;
     }
 }
 

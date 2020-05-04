@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CA32.cs" />
     <Compile Include="CArgb.cs" />
+    <Compile Include="CAWave.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
